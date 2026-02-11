@@ -2,6 +2,11 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+// Game constants
+const MAX_INITIAL_ANGLE = Math.PI / 6; // 30 degrees
+const MAX_BOUNCE_ANGLE = Math.PI / 3; // 60 degrees
+const BASE_POINTS = 10;
+
 // Game state
 let gameState = 'ready'; // ready, playing, paused, gameOver, win
 let score = 0;
@@ -78,7 +83,7 @@ function init() {
 function resetBall() {
     ball.x = canvas.width / 2;
     ball.y = paddle.y - ball.radius;
-    const angle = (Math.random() * Math.PI / 3) - Math.PI / 6; // -30 to 30 degrees
+    const angle = (Math.random() * MAX_INITIAL_ANGLE * 2) - MAX_INITIAL_ANGLE;
     ball.dx = ball.speed * Math.sin(angle);
     ball.dy = -ball.speed * Math.cos(angle);
 }
@@ -173,7 +178,7 @@ function moveBall() {
         // Calculate hit position on paddle (-1 to 1)
         const hitPos = (ball.x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
         // Change angle based on hit position
-        const angle = hitPos * Math.PI / 3; // Max 60 degrees
+        const angle = hitPos * MAX_BOUNCE_ANGLE;
         ball.dx = ball.speed * Math.sin(angle);
         ball.dy = -ball.speed * Math.cos(angle);
     }
@@ -209,7 +214,7 @@ function brickCollision() {
                 ) {
                     ball.dy *= -1;
                     brick.visible[row][col] = false;
-                    score += (5 - row) * 10; // Higher rows give more points
+                    score += (brick.rows - row) * BASE_POINTS;
                     updateScore();
                     
                     // Check for win
