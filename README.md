@@ -1,6 +1,6 @@
-# ブロック崩し (Breakout Game)
+# ブロック崩し with Claude (Breakout Game with Claude)
 
-シンプルで楽しいブロック崩しゲームです。ブラウザで動作します。
+シンプルで楽しいブロック崩しゲームです。Claudeによって作成され、ブラウザで動作します。
 
 ## 🎮 遊び方
 
